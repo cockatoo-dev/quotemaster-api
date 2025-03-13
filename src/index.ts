@@ -33,7 +33,7 @@ app.get('/popular', async (c) => {
   return c.json(popularList[randomId])
 })
 
-app.get('/id',
+app.get('/quote',
   validator('query', (query, c) => {
     const querySchema = z.object({
       id: z.coerce.number().int()
