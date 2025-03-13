@@ -1,8 +1,3 @@
-```
-npm install
-npm run dev
-```
+# quotemaster-api
 
-```
-npm run deploy
-```
+API server code for [Quotemaster](https://github.com/cockatoo-dev/quotemaster)
