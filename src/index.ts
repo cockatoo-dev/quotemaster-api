@@ -21,6 +21,8 @@ app.get('/random', async (c) => {
   const stats = await db.getQuotesStats()
   const randomId = Math.floor(Math.random() * stats.count) + 1
   const quote = await db.getQuoteById(randomId)
+
+  c.header('Cache-Control', 'no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate')
   return c.json(quote[0])
 })
 
@@ -30,6 +32,8 @@ app.get('/popular', async (c) => {
   const likesThreshold = Math.ceil((stats.maxLikes || 0) * 0.75)
   const popularList = await db.getQuotesWithLikes(likesThreshold)
   const randomId = Math.floor(Math.random() * popularList.length)
+
+  c.header('Cache-Control', 'no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate')
   return c.json(popularList[randomId])
 })
 
