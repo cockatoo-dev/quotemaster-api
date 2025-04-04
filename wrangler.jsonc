@@ -2,13 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "quotemaster-api",
   "main": "src/index.ts",
-  "compatibility_date": "2025-02-22",
+  "compatibility_date": "2025-04-04",
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1
+  "vars": {
+    "NODE_VERSION": 22
   },
   "d1_databases": [
     {
