@@ -40,7 +40,7 @@ app.get('/popular', async (c) => {
 app.get('/id',
   validator('query', (query, c) => {
     const querySchema = z.object({
-      id: z.coerce.number().int()
+      id: z.coerce.number()
     })
     const queryParse = querySchema.safeParse(query)
     if (queryParse.success) {
@@ -51,6 +51,9 @@ app.get('/id',
   }),
   async (c) => {
     const queryData = c.req.valid('query')
+    if (queryData.id !== Math.floor(queryData.id)) {
+      return c.json({message: 'Invalid quote ID'}, 400)
+    }
     const db = useDB(c)
     const quote = await db.getQuoteById(queryData.id)
     if (quote.length < 1) {
@@ -85,17 +88,20 @@ app.post('/new',
 app.post('/like', 
   validator('json', (body, c) => {
     const bodySchema = z.object({
-      id: z.number().int()
+      id: z.number()
     })
     const bodyParse = bodySchema.safeParse(body)
     if (bodyParse.success) {
-      return body
+      return bodyParse.data
     } else {
       return c.json({message: 'Invalid request format'}, 400)
     }
   }),
   async (c) => {
     const bodyData = c.req.valid('json')
+    if (bodyData.id !== Math.floor(bodyData.id)) {
+      return c.json({message: 'Invalid quote ID'}, 400)
+    }
     const db = useDB(c)
     const quote = await db.getQuoteById(bodyData.id)
     if (quote.length < 1) {
